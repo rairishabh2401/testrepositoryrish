@@ -1,0 +1,132 @@
+primary key--- a column or a combination of the column which finds the 
+              row uniquely
+              not null 
+not null ---  duplicate are allowed but not empty
+
+unique-- no duplicates but any number of null values 
+         are allowed
+check   --- condition
+
+Foreign key -----refertial integrity
+
+create table dept(
+   deptid number primary key,
+   dname  varchar2(40) not null,
+   dloc varchar2(40),
+
+)
+
+create table employee(
+  empno number primary key,
+  ename varchar2(100) not null,
+  doj date default sysdate,
+  passport_no number(11) unique,
+  job varchar2(50),
+  grade char(2) check(grade in ('a','b','c','d')),
+  sal number(12,2) check(sal>2000),
+  deptno number references mydept(deptno)
+  )
+
+
+
+insert into employee values(101,'Reghuram','19-Mar-94',34234231,'Manager','d',2500,13);
+insert into employee(empno,ename,sal,grade) values (102,'Revati',78888,'a');
+
+
+select * from employee;
+
+
+
+
+DML--- insert, delete,update
+
+DDL --- create table
+
+DQL ---- select
+
+
+------to display all rows with mgr 7839
+select *
+from emp
+where mgr=7839;
+
+------to display all rows with mgr=7831 and working in deptno 10
+select *
+from emp
+where mgr=7839 and deptno=10;
+
+------to display all rows with mgr=7831 or working in deptno 10
+select *
+from emp
+where mgr=7839 and deptno=10;
+
+
+---display all employees with sal >1500 and sal <2500
+select *
+from emp
+where sal>=1500 and sal<=2500;
+
+select *
+from emp
+where sal between 1500 and 2500;
+
+
+----display all employees whose manager is either 7839 or 7698 or 7901
+select *
+from emp
+where mgr=7839 or mgr=7698 or mgr=7901;
+
+
+select * from emp
+where mgr in (7839,7698,7901)
+
+-----list all employee who didnot earn any commission
+select * from emp
+where comm is null
+
+-----list all employee who earn some commision
+select * from emp
+where comm is not null
+
+
+-----list all employees with name ward
+select *
+from emp
+where ename='WARD'
+
+----- list all employee whose name starts with A
+select * from emp
+where ename like 'A%';
+
+
+----- list all employee whose name ends with A
+select * from emp
+where ename like '%A';
+
+
+
+----- list all employee whose name starts with A and ends with S
+select * from emp
+where ename like 'A%S';
+
+----- list all employee whose name contais I at 2nd postion
+select * from emp
+where ename like '_I%'
+
+----- list all employee whose name contais I at 2nd postion and E at secondlast position
+select * from emp
+where ename like '_I%E_'
+
+----- list all employee whose name contais L at 3rd postion and E at secondlast position
+
+select * from emp
+where ename like '__L%'
+
+----- list all employee whose name contais E somewhere
+select * from emp
+where ename like '%E%
+
+----- list all employee whose name do not starts with A 
+select * from emp
+where ename not like 'A%';
+
